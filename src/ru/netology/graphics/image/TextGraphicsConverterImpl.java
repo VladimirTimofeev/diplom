@@ -27,22 +27,44 @@ public class TextGraphicsConverterImpl implements TextGraphicsConverter {
         BufferedImage img = ImageIO.read(new URL(url));
         int height = img.getHeight();
         int width = img.getWidth();
-        int newRatio = 0;
+        double newRatio = 0;
 
-        int minRatioImg = Math.min(height, width);
-        int maxRatioImg = Math.max(height, width);
-        double ratio = (double) maxRatioImg / minRatioImg;
+        int minSideImg = Math.min(height, width);
+        int maxSideImg = Math.max(height, width);
+        double ratio = (double) maxSideImg / minSideImg;
         if (ratio > this.maxRatio) {
             throw new BadImageSizeException(ratio, maxRatio);
         }
-        int maxWidthHight = Math.max(width, height);
-        if(maxRatioImg > maxWidthHight) {
-            newRatio = maxRatioImg / maxWidthHight;
+
+        double newRatioHeight = 0;
+        if(height > maxHeight) {
+            newRatioHeight = (double) height / maxHeight;
         }
 
+        double newRatioWidth = 0;
+        if(width > maxWidth) {
+            newRatioWidth = (double) width / maxWidth;
+        }
+         if(newRatioHeight > 1 && newRatioWidth > 1) {
+             newRatio = Math.max(newRatioHeight, newRatioWidth);
+         }
 
-        int newWidth = width / newRatio;
-        int newHeight = height / newRatio;
+         if (newRatioHeight > 1 && newRatioWidth < 1) {
+             newRatio = newRatioHeight;
+         }
+
+         if (newRatioHeight < 1 && newRatioWidth > 1) {
+             newRatio = newRatioWidth;
+         }
+
+        if (newRatioHeight == newRatioWidth) {
+            newRatio = newRatioWidth;
+        }
+
+        double newSize = (double) width / newRatio;
+
+        int newWidth = (int)Math.ceil(width / newRatio);
+        int newHeight = (int)Math.ceil(height / newRatio);
 
         Image scaledImage = img.getScaledInstance(newWidth, newHeight, BufferedImage.SCALE_SMOOTH);
         BufferedImage bwImg = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_BYTE_GRAY);
