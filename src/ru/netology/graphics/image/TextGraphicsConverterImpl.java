@@ -61,8 +61,6 @@ public class TextGraphicsConverterImpl implements TextGraphicsConverter {
             newRatio = newRatioWidth;
         }
 
-        double newSize = (double) width / newRatio;
-
         int newWidth = (int)Math.ceil(width / newRatio);
         int newHeight = (int)Math.ceil(height / newRatio);
 
