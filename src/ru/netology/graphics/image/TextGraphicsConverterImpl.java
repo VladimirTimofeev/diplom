@@ -24,6 +24,7 @@ public class TextGraphicsConverterImpl implements TextGraphicsConverter {
 
     @Override
     public String convert(String url) throws IOException, BadImageSizeException {
+
         BufferedImage img = ImageIO.read(new URL(url));
         int height = img.getHeight();
         int width = img.getWidth();
@@ -70,8 +71,8 @@ public class TextGraphicsConverterImpl implements TextGraphicsConverter {
         graphics.drawImage(scaledImage, 0, 0, null);
         WritableRaster bwRaster = bwImg.getRaster();
         StringBuilder sb = new StringBuilder();
-        for (int h = 0; h < height; h++) {
-            for (int w = 0; w < width; w++) {
+        for (int h = 0; h < newHeight; h++) {
+            for (int w = 0; w < newWidth; w++) {
                 int color = bwRaster.getPixel(w, h, new int[3])[0];
                 char c = schema.convert(color);
                 sb.append(c).append(c);

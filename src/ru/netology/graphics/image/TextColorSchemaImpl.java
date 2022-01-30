@@ -6,6 +6,6 @@ public class TextColorSchemaImpl implements TextColorSchema {
     @Override
     public char convert(int color) {
         double devider = (double) 256 / replacement.length;
-        return replacement[(int)Math.round(color / devider)];
+        return replacement[(int)Math.floor(color / devider)];
     }
 }
