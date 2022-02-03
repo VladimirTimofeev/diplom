@@ -37,12 +37,12 @@ public class TextGraphicsConverterImpl implements TextGraphicsConverter {
             throw new BadImageSizeException(ratio, maxRatio);
         }
 
-        double newRatioHeight = 0;
+        double newRatioHeight = 1;
         if(height > maxHeight) {
             newRatioHeight = (double) height / maxHeight;
         }
 
-        double newRatioWidth = 0;
+        double newRatioWidth = 1;
         if(width > maxWidth) {
             newRatioWidth = (double) width / maxWidth;
         }
